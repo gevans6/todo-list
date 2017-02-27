@@ -46,7 +46,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                                <button id="addTask" type="click" class="btn btn-primary">Add Task</button>
                             </div>
                         </div>
                         
@@ -64,32 +64,33 @@
                                 </div>
 
                                 <div class="modal-body">
-                                        <form id="edit-task-form">
-                                                <textarea id="edit-title-input" rows="1" cols="50" placeholder="Title"></textarea>
+                                    <form id="edit-task-form">
+                                            <textarea id="edit-title-input" rows="1" cols="50" placeholder="Title"></textarea>
 
-                                                <textarea id="edit-description-input" rows="1" cols="50" placeholder="Description"></textarea>
+                                            <textarea id="edit-description-input" rows="1" cols="50" placeholder="Description"></textarea>
 
-                                                <textarea id="edit-date-input" rows="1" cols="50" placeholder="Date"></textarea>
+                                            <textarea id="edit-date-input" rows="1" cols="50" placeholder="Date"></textarea>
 
-                                                <textarea id="edit-time-input" rows="1" cols="50" placeholder="Time"></textarea>
+                                            <textarea id="edit-time-input" rows="1" cols="50" placeholder="Time"></textarea>
 
-                                                <select size="1" id="edit-priority" name="level">
-                                                    <option value=""> - Select - </option>
-                                                    <option value="high">High</option>
-                                                    <option value="medium">Medium</option>
-                                                    <option value="low">Low</option>
-                                                    <option value="none">N/A</option>
-                                                </select>
-                                        </form>
-                                    </div>
-                                <div class="modal-footer">
-                                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                                            <select size="1" id="edit-priority" name="level">
+                                                <option value=""> - Select - </option>
+                                                <option value="high">High</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="low">Low</option>
+                                                <option value="none">N/A</option>
+                                            </select>
+                                    </form>
+                                </div>
+                                <div class="modal-footer" id="edit-modal-footer">
+                                    <!--<button id="editSubmit" type="click" class="btn btn-primary">Update</button>-->
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <ul id="todoList" class"list-unstyled"></ul>
+                    <ul id="doneList" class="list-unstyled"></ul>
 
                     <div id="post-error" class="alert alert-danger" role="alert"></div>
     </div>
