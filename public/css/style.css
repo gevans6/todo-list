@@ -1,0 +1,89 @@
+/*
+ *  This file should contain your custom style rules.
+ */
+.alert {
+    display: none;
+}
+
+.alert.active {
+    display: block;
+}
+
+#messages img {
+    float: left;
+}
+
+.list-group-item {
+  overflow:hidden;  
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  height: 200px;
+}
+
+#messages p {
+    position: absolute;
+    font-family: "Comic Sans MS", sans-serif;
+    left: 108px;
+    top: 35px;
+    max-width: 420px;
+    max-height: 50px;
+}
+
+#messages h4 {
+    position: absolute;
+    left: 105px;
+    top: -7px;
+    color: blue;
+    font-family: Impact, sans-serif;
+    font-size: 30px;
+}
+
+#messages #edit-button.btn.btn-link {
+    position: absolute;
+    font-size: 12px;
+    left: -3px;
+    bottom: 8px;
+    
+}
+
+#messages #remove-button.btn.btn-link {
+    position: absolute;
+    font-size:12px;
+    left: 30px;
+    bottom: 8px;
+}
+
+#messages #edit-box {
+    position: absolute;
+    left: 106px;
+    top: 33px;
+}
+
+#messages #edit-confirm.btn.btn-primary {
+    position: absolute;
+    left:  106px;
+    top: 85px;
+}
+
+#messages #edit-cancel.btn.btn-default {
+    position: absolute;
+    left: 214px;
+    top: 85px;
+}
+
+#messages span {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    color: grey;
+    font-size: 10px;
+
+}
+
+.hide {
+    display: none;
+}

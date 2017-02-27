@@ -1,0 +1,23 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "To do list",
+  "main": "app.js",
+  "dependencies": {
+    "firebase": "^3.6.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gevans6/todo-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gevans6/todo-list/issues"
+  },
+  "homepage": "https://github.com/gevans6/todo-list#readme"
+}
