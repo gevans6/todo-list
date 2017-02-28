@@ -42,8 +42,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     if(user) {
         var database = firebase.database();
         var todo = database.ref("channels/todo");
-        var done = database.ref("channels/completed")
-
+        var done = database.ref("channels/completed");
         
         // Adding a child node to the todo list
         todo.on("child_added", function(data) {
