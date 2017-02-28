@@ -5,94 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snap-List!</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body background = "Snap-Raise-background.png">
     <div class="container">
-        <h1>Welcome to Your List! 
+        <h1 id="listHeader" align="center">Welcome to Snap-List!
             <button id="logout" type="click" class="btn btn-primary pull-right"  href="#right-panel">Logout</button>
         </h1>
-                <h2>Modal Example</h2>
-                    <!-- Trigger the modal with a button -->
-                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addTaskModal">Open Modal</button>
+            <!-- Trigger the modal with a button -->
+            <span>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addTaskModal">Add Task</button>
+                <button type="button" id="clearAllButton" style="float:right" class="btn btn-danger btn-lg">Clear Completed Tasks</button>
+            </span>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="addTaskModal" role="dialog">
-                        <div class="modal-dialog">
-                        
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
+            <!-- Modal -->
+            <div class="modal fade" id="addTaskModal" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="task-form">
+                                <textarea id="title-input" rows="1" cols="50" placeholder="Title"></textarea>
+
+                                <textarea id="description-input" rows="3" cols="50" placeholder="Description"></textarea>
+
+                                <textarea id="date-input" rows="1" cols="50" placeholder="Date"></textarea>
+
+                                <textarea id="time-input" rows="1" cols="50" placeholder="Time"></textarea>
+
+                                <br>
+                                <span>Priority Level
+                                <select size="1" id="priority" name="level">
+                                    <option value=""> - Select - </option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
+                                    <option value="N/A">N/A</option>
+                                </select>
+                                </span>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="addTask" type="click" class="btn btn-primary">Add Task</button>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div id="editModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title">Hello</h4>
-                            </div>
-                            <div class="modal-body">
-                                <form id="task-form">
-                                        <textarea id="title-input" rows="1" cols="50" placeholder="Title"></textarea>
-
-                                        <textarea id="description-input" rows="1" cols="50" placeholder="Description"></textarea>
-
-                                        <textarea id="date-input" rows="1" cols="50" placeholder="Date"></textarea>
-
-                                        <textarea id="time-input" rows="1" cols="50" placeholder="Time"></textarea>
-
-                                        <select size="1" id="priority" name="level">
-                                            <option value=""> - Select - </option>
-                                            <option value="high">High</option>
-                                            <option value="medium">Medium</option>
-                                            <option value="low">Low</option>
-                                            <option value="none">N/A</option>
-                                        </select>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button id="addTask" type="click" class="btn btn-primary">Add Task</button>
-                            </div>
                         </div>
-                        
+
+                        <div class="modal-body">
+                            <form id="edit-task-form">
+                                    <textarea id="edit-title-input" rows="1" cols="50" placeholder="Title"></textarea>
+
+                                    <textarea id="edit-description-input" rows="3" cols="50" placeholder="Description"></textarea>
+
+                                    <textarea id="edit-date-input" rows="1" cols="50" placeholder="Date"></textarea>
+
+                                    <textarea id="edit-time-input" rows="1" cols="50" placeholder="Time"></textarea>
+
+                                    <br>
+                                    <span>Priority Level
+                                    <select size="1" id="edit-priority" name="level">
+                                        <option value=""> - Select - </option>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                        <option value="N/A">N/A</option>
+                                    </select>
+                                    </span>
+                            </form>
                         </div>
+                        <div class="modal-footer" id="edit-modal-footer"></div>
                     </div>
+                </div>
+            </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Your Todo List</h2>   
+                <ul id="todoList" class"list-unstyled"></ul>
+            </div>
 
-                    <!-- Modal -->
-                    <div id="editModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
+            <div class="col-md-4">
+                <h2>Completed Tasks</h2>
+                <ul id="doneList" class="list-unstyled"></ul>
+            </div>
+        </div>
 
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Hello</h4>
-                                </div>
-
-                                <div class="modal-body">
-                                    <form id="edit-task-form">
-                                            <textarea id="edit-title-input" rows="1" cols="50" placeholder="Title"></textarea>
-
-                                            <textarea id="edit-description-input" rows="1" cols="50" placeholder="Description"></textarea>
-
-                                            <textarea id="edit-date-input" rows="1" cols="50" placeholder="Date"></textarea>
-
-                                            <textarea id="edit-time-input" rows="1" cols="50" placeholder="Time"></textarea>
-
-                                            <select size="1" id="edit-priority" name="level">
-                                                <option value=""> - Select - </option>
-                                                <option value="high">High</option>
-                                                <option value="medium">Medium</option>
-                                                <option value="low">Low</option>
-                                                <option value="none">N/A</option>
-                                            </select>
-                                    </form>
-                                </div>
-                                <div class="modal-footer" id="edit-modal-footer">
-                                    <!--<button id="editSubmit" type="click" class="btn btn-primary">Update</button>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <ul id="todoList" class"list-unstyled"></ul>
-                    <ul id="doneList" class="list-unstyled"></ul>
-
-                    <div id="post-error" class="alert alert-danger" role="alert"></div>
+        <div id="post-error" class="alert alert-danger" role="alert"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>

@@ -1,0 +1,76 @@
+#listHeader{
+    color: white;
+}
+
+label {
+    font-size: 20px;
+    color: white;
+}
+
+legend {
+    color:white;
+}
+
+#welcome {
+    color: white;
+}
+
+#welcome-description {
+    color: white;
+}
+
+#todoList h3 {
+    font-size: 40px;
+    color: darkblue;
+}
+
+#todoList p {
+    font-size: 16px;
+}
+
+#todoList #removeButton.btn.btn-danger {
+    position: absolute;
+    right: -20px;
+    bottom: 8px;
+}
+
+#todoList #descriptionString {
+    font-weight: bold;
+}
+
+#todoList #dateString {
+    font-weight: bold;
+}
+
+#todoList #timeString {
+    font-weight: bold;
+
+}
+
+#todoList #priorityString {
+    font-weight: bold;
+}
+
+#doneList h4 {
+    font-weight: bold;
+}
+
+#doneList p {
+    color: lightgrey;
+}
+
+.alert {
+    display: none;
+}
+
+.alert.active {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.row h2 {
+    color:white;
+}

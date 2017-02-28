@@ -2,6 +2,7 @@
 var todoList = document.getElementById("todoList");
 var doneList = document.getElementById("doneList");
 var logoutButton = document.getElementById("logout");
+var ClearAllButton = document.getElementById("clearAllButton");
 
 //variable declaration for initial task creation
 var addTaskButton = document.getElementById("addTask");
@@ -35,49 +36,67 @@ firebase.auth().onAuthStateChanged(function(user) {
         var todo = database.ref("channels/todo");
         var done = database.ref("channels/completed")
 
+        
+        // Adding a child node to the todo list
         todo.on("child_added", function(data) {
             var id = data.key;
             var item = data.val();
             
+            if(user.uid === item.uid){
 
+            
             //create to-do list item
-
-            var title = document.createElement("h4");
+            var title = document.createElement("h3");
             title.id = (id + "title");
             title.innerText = item.title;
+
+            var descriptionString = document.createElement("p");
+            descriptionString.id = "descriptionString";
+            descriptionString.innerText = "Description: ";
 
             var description = document.createElement("p");
             description.id = (id + "description");
             description.innerText = item.description;
 
+            var dateString = document.createElement("p");
+            dateString.id = "dateString";
+            dateString.innerText = "Due Date: ";
+
             var date = document.createElement("p");
             date.id = (id + "date");
             date.innerText = item.date;
+
+            var timeString = document.createElement("p");
+            timeString.id = "timeString";
+            timeString.innerText = "Time: ";
 
             var time = document.createElement("p");
             time.id = (id + "time");
             time.innerText = item.time;
 
+            priorityString = document.createElement("p");
+            priorityString.id = "priorityString";
+            priorityString.innerHTML = "Priority Level: ";
+
             var priority = document.createElement("p");
             priority.id = (id + "priority");
             priority.innerText = item.priority;
 
+            // Edit task button
             var editButton = document.createElement("button");
             editButton.id = "editModal";
             editButton.className = "btn btn-link";
             editButton.innerText = "Edit";
             editButton.type = "click";
             
-            //reassign the id of the submit button from the modal to be specific to each node
-
-
+            // Submit edit button
             var editSubmitButton = document.createElement("button");
             editSubmitButton.id = (id + "editSubmit");
             editSubmitButton.type = "click"
             editSubmitButton.className = "btn btn-primary";
             editSubmitButton.innerText = "Update Text";
-            //id and functionality
- 
+            
+            // Edit modal footer, local to keep contained within each item
             var editModalFooter = document.getElementById("edit-modal-footer");
             
 
@@ -85,7 +104,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
             var removeButton = document.createElement("button");
             removeButton.id = "remove-button";
-            removeButton.className = "btn btn-link";
+            removeButton.className = "btn btn-danger";
             removeButton.innerText = "Delete";           
 
             var editTaskModal = document.createElement("modal");
@@ -93,7 +112,7 @@ firebase.auth().onAuthStateChanged(function(user) {
              // Completed button
             var doneButton = document.createElement("button");
             doneButton.id = "done-button";
-            doneButton.className = "btn btn-primary";
+            doneButton.className = "btn btn-success";
             doneButton.innerText = "Mark as Complete";
             doneButton.type = "click";
 
@@ -105,11 +124,11 @@ firebase.auth().onAuthStateChanged(function(user) {
                 done.push({
                     uid: user.uid,
                     displayName: user.displayName,
-                    description: document.getElementById(id + "description").innerHTML,
-                    date: document.getElementById(id + "date").innerHTML,
-                    title: document.getElementById(id + "title").innerHTML,
-                    time: document.getElementById(id + "time").innerHTML,
-                    priority: document.getElementById(id + "priority")
+                    description: item.description,
+                    date: item.date,
+                    title: item.title,
+                    time: item.time,
+                    priority: item.priority
                 })
                 .then(function() {
                     node.remove();
@@ -119,24 +138,28 @@ firebase.auth().onAuthStateChanged(function(user) {
                     textError.classList.add("active");
                 })
             });
-                
-                var todoLi = document.createElement("li");
+    
+            var todoLi = document.createElement("li");
 
-                // Append to the to-do list item
-                todoLi.id =  id;
-                todoLi.className = "list-group-item";
-                todoLi.appendChild(title);
-                todoLi.appendChild(description);
-                todoLi.appendChild(date);
-                todoLi.appendChild(time);
-                todoLi.appendChild(priority);
-                todoLi.appendChild(editButton);
-                todoLi.appendChild(removeButton);
-                todoLi.appendChild(doneButton);
-
+            // Append to the to-do list item
+            todoLi.id =  id;
+            todoLi.className = "list-group-item";
+            todoLi.appendChild(title);
+            //;
+            todoLi.appendChild(descriptionString);
+            todoLi.appendChild(description)
+            todoLi.appendChild(dateString);
+            todoLi.appendChild(date);
+            todoLi.appendChild(timeString);
+            todoLi.appendChild(time);
+            todoLi.appendChild(priorityString);
+            todoLi.appendChild(priority);
+            todoLi.appendChild(editButton);
+            todoLi.appendChild(doneButton);
+            todoLi.appendChild(removeButton);
             
 
-            //Toggle edit area with edit button
+            // Toggle edit area with edit button
             editButton.addEventListener("click", function(e) {
                 $('#editModal').modal('show');
                 editTaskTitleInput.value = document.getElementById(id + "title").innerHTML;
@@ -145,13 +168,12 @@ firebase.auth().onAuthStateChanged(function(user) {
                 editTaskTimeInput.value = document.getElementById(id + "time").innerHTML;
                 editTaskPriorityInput.value = document.getElementById(id + "priority").innerHTML;
                 
-
-
                 var editSubmitButtonId = editSubmitButton.id.substring(0, editSubmitButton.id.length - 10);
 
                 console.log(id) 
                 console.log(editSubmitButtonId);
 
+                // Append the submit button the corresponds to the specific task
                 if(id === editSubmitButtonId) {
                     while(editModalFooter.hasChildNodes()) {
                         editModalFooter.removeChild(editModalFooter.lastChild)
@@ -191,16 +213,21 @@ firebase.auth().onAuthStateChanged(function(user) {
 
             // Append to the HTML
             todoList.appendChild(todoLi);  
-
-            console.log(id + "child added");          
+            
+            console.log(id + "child added"); 
+            }         
         });
 
+        
+
+        // Adding a child node to the completed list
         done.on("child_added", function(data) {
             var id = data.key;
             var item = data.val();
             
             //create done list item
-
+            if(user.uid === item.uid){
+     
             var title = document.createElement("h4");
             title.id = (id + "title");
             title.innerText = item.title;
@@ -209,16 +236,70 @@ firebase.auth().onAuthStateChanged(function(user) {
             description.id = (id + "description");
             description.innerText = item.description;
 
+            // create clear and add back to todo buttons
+
+            var clearButton = document.createElement("button");
+            clearButton.id = "clearButton";
+            clearButton.type = "click";
+            clearButton.className = "btn btn-primary";
+            clearButton.innerText = "Clear";
+
+            var addBack = document.createElement("button");
+            addBack.id = "addBack";
+            addBack.type = "click";
+            addBack.className = "btn btn-warning";
+            addBack.innerText = "Add Back To Todo";
+
+            // create listeners for those buttons
+
+            clearButton.addEventListener("click", function(e) {
+                console.log("delete" + id);
+                node = database.ref("channels/completed/" + id);
+                node.remove(); 
+            });
+
+            addBack.addEventListener("click", function(e) {
+                console.log("adding back");
+                node = database.ref("channels/completed/" + id);
+
+                todo.push({
+                    uid: user.uid,
+                    displayName: user.displayName,
+                    description: item.description,
+                    date: item.date,
+                    title: item.title,
+                    time: item.time,
+                    priority: item.priority
+                });
+
+                node.remove();
+
+            
+            });
+
             var doneLi = document.createElement("li");
 
             doneLi.className = ("list-group-item");
+            doneLi.id = id;
             doneLi.appendChild(title);
             doneLi.appendChild(description);
+            doneLi.appendChild(clearButton);
+            doneLi.appendChild(addBack);
 
             doneList.appendChild(doneLi);
+
+            }
         });
 
-        // Change the DOM when firebase is changed
+        // Change the DOM when firebase is removed(done)
+        done.on("child_removed", function(data) {
+            var id = data.key;
+
+            var removeNode = document.getElementById(id);
+            removeNode.parentNode.removeChild(removeNode);
+        })
+
+        // Change the DOM when firebase is changed(todo)
         todo.on("child_changed", function(data) {
 
             var id = data.key;
@@ -234,7 +315,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             console.log("DOM changes when todo firebase is changed");
         });
 
-        // Change the DOM when firebase is removed
+        // Change the DOM when firebase is removed(todo)
         todo.on("child_removed", function(data) {
             var id = data.key;
 
@@ -248,29 +329,23 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 })
 
+// Add task button
 addTaskButton.addEventListener("click", function(e) {
     console.log("submit button hit");
     var database = firebase.database();
     var todo = database.ref("channels/todo");
     var user = firebase.auth().currentUser;
 
-    var titleRaw = taskTitleInput.value;
-    var descriptionRaw = taskDescriptionInput.value;
-    var dateRaw = taskDateInput.value;
-    var timeRaw = taskTimeInput.value;
-    var priorityRaw = taskPriorityInput.value;
-    
-
-    todo.push({
+    todo.push({ // Push data to firebase
         uid: user.uid,
         displayName: user.displayName,
-        description: descriptionRaw,
-        date: dateRaw,
-        title: titleRaw,
-        time: timeRaw,
-        priority: priorityRaw
+        description: taskDescriptionInput.value,
+        date: taskDateInput.value,
+        title: taskTitleInput.value,
+        time: taskTimeInput.value,
+        priority: taskPriorityInput.value
     })
-    .then(function() {
+    .then(function() { // Reset the Modal
         document.getElementById("title-input").value = "";
         document.getElementById("description-input").value = "";
         document.getElementById("date-input").value = "";
@@ -278,11 +353,15 @@ addTaskButton.addEventListener("click", function(e) {
         document.getElementById("priority").value = "";
          $('#addTaskModal').modal('hide');
     })
-    .catch(function(error) {
+    .catch(function(error) { // Error
         textError.innerText = "Error creating your task";
         textError.classList.add("active");
     });
-
-    //$('#myModal').modal('show');
 });
 
+clearAllButton.addEventListener("click", function(e) {
+    var database = firebase.database();
+    var done = database.ref("channels/completed");
+
+    done.remove();
+})
